@@ -7,7 +7,7 @@ const buildPath = path.resolve(__dirname, 'build');
 fs.removeSync(buildPath);
 
 // read content from contract files in contract folder
-const filepath = path.resolve(__dirname, 'contracts', 'SampleContract.sol');
+const filepath = path.resolve(__dirname, 'contracts', 'Token.sol');
 const source = fs.readFileSync(filepath, 'utf8');
 
 // compile that content using solc

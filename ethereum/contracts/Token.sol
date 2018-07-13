@@ -128,7 +128,7 @@ contract Token is Ownable {
    
     tokenPrice = 10 wei;  
     balance[owner] = 100;
-    contractBalance = 900;
+    contractBalance = 99900;
     totalSupply = contractBalance.add(balance[owner]); // must be same as initial amount given to deployer
     
   }
@@ -141,11 +141,12 @@ contract Token is Ownable {
    *  @dev Allows anyone to buy tokens
    */
   function buyTokens() public payable returns(uint256){
-      uint256 buyAmount = tokenPrice.div(msg.value);
+      require( msg.value >= tokenPrice );
+      uint256 buyAmount = msg.value.div(tokenPrice);
       require(contractBalance > buyAmount);
       balance[msg.sender] = balance[msg.sender].add(buyAmount);
       contractBalance = contractBalance.sub(buyAmount);
-      return balance[msg.sender];
+      return buyAmount;
   }
   
   /**
@@ -160,7 +161,7 @@ contract Token is Ownable {
   }
   
   /**
-   *  @dev Allows an owner to sell their tokens back
+   *  @dev Allows an owner to sell their tokens back, in exchange for ether
    */
   function sellTokens(uint256 _amount) public {
       require(balance[msg.sender] > _amount);
@@ -177,3 +178,4 @@ contract Token is Ownable {
   }
   
 }
+
